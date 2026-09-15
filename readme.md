@@ -2,7 +2,9 @@
 
 A capacitive-sensing, solenoid-driven water lick port for pyControl mouse behaviour rigs.
 
-**Status:** This is open but roughly documented and does not have assembly instructions. For questions, please email grimal@janelia.hhmi.org. 
+**Status:** This is open but roughly documented and does not have assembly instructions. In general this is a rough, very DIY build - being shared in case it is useful inspiration for others.  For questions, please email grimal@janelia.hhmi.org. 
+
+![Lick port photo](lickport_photo.jpg)
 
 ## 1. Overview
 
