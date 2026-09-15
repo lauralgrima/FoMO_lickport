@@ -32,8 +32,6 @@ File: `modular_poke-panel_slide V2.stl` (binary STL, ~5.7 MB, 113,730 triangles)
 
 ![Wiring & fluidics diagram](wiring_diagram.svg)
 
-*(diagram file: `wiring_diagram.svg`, alongside this guide — keep it in the same folder for the image link above to resolve)*
-
 ### 4.1 Capacitive touch sensor — SparkFun AT42QT1011
 
 | Pin | Function | Wiring |
@@ -69,7 +67,7 @@ Suggested wiring (channel "A"):
 - Cap sensor **OUT → DIO_A** terminal
 - Solenoid **→ POW_A / +12V** header (POW lines are low-side switches: pyControl grounds the POW line when the valve should open, so the solenoid's other lead sits at +12V continuously; each POW line can sink up to 200 mA)
 
-Note on voltage: the LHQA2431220H is nominally a 24V valve, but the port adapter's driver headers only expose +5V/+12V, so it's being run under-voltage at +12V here. "Silent" Lee valves are commonly run this way (slower/quieter actuation, less force than at rated voltage) — you've confirmed this works fine in practice for this setup, just flagging it here so it's documented rather than assumed.
+Note on voltage: the LHQA2431220H is nominally a 24V valve, but the port adapter's driver headers only expose +5V/+12V, so it's being run under-voltage at +12V here. Nevertheless, this works fine if the pyControl breakout board is powered by a 24V plug. (Can add a heatsink if concerned about burning the board out). 
 
 ### 4.3 Solenoid & fluidics — LHQA2431220H (3-port)
 
@@ -82,8 +80,6 @@ Note on voltage: the LHQA2431220H is nominally a 24V valve, but the port adapter
 Port adapter → Cat5/6 patch cable → any one of the 6 numbered ports on the Breakout Board → USB/serial to the host PC running the pyControl GUI. Which port number you use just needs to match what you reference in the hardware definition file below.
 
 ## 5. Firmware — pyControl
-
-Three pyControl code files live alongside this guide in the repo (kept as separate files rather than duplicated here, so there's one source of truth):
 
 - **[`hex_port.py`](./hex_port.py)** — custom device class: a single cap-sensor + solenoid pair on one behaviour port (`DIO_A` for the touch sensor, `POW_A` for the solenoid). Note: this fixes a bug from the original version, `value()` referenced `self.input`, which was never set (the attribute is named `self.cap_sensor`) and would have raised `AttributeError` the first time it was called.
 - **[`hardware_definition.py`](./hardware_definition.py)** — instantiates the board and `port1 = Hex_port(...)`, wiring `'lick1'`/`'lick_off1'` events to the touch sensor.
